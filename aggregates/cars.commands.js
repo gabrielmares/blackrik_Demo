@@ -10,8 +10,6 @@ const {
     ForbiddenError
 } = require('../errors');
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 module.exports = {
     register: async (command, state/* , context */) => {
