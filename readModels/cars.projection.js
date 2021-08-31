@@ -16,12 +16,12 @@ module.exports = {
             updatedAt: 'date'
         });
     },
-    [NEW_CAR]: (command, store) => {
+    [NEW_CAR]: async (command, store) => {
         return await store.insert(tableName, {
             ...command.payload
         })
     },
-    [UPDATE_CAR]: (command, store) => {
+    [UPDATE_CAR]: async (command, store) => {
         return await store.update(tableName, {
             id: command.id
         }, {
