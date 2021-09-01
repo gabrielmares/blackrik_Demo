@@ -1,8 +1,9 @@
+const { UnauthorizedError } = require('../errors')
 require('dotenv').config()
 
-module.exports = (req, res, next) => {    
+module.exports = (req, res, next) => {
     if (req.body.token !== process.env.TOKEN) {
-        return res.status(404);
+        throw new UnauthorizedError();
     }
     next()
 }
