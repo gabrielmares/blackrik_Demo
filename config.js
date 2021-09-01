@@ -53,11 +53,14 @@ module.exports = {
     },
     contextProvider: require('./auth/provider'),
     server: {
+        middlewares: [
+            require('./auth/middleware')
+        ],
         routes: [
             {
                 method: 'GET',
                 path: '/cars',
-                callback: require('./auth/middleware')
+                callback: require('./auth/provider')
             }
         ]
     }

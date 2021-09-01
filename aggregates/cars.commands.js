@@ -1,6 +1,7 @@
 const {
     NEW_CAR,
-    UPDATE_CAR
+    UPDATE_CAR,
+    EVENT_REJECTED
 } = require('../events/cars');
 
 
@@ -47,5 +48,11 @@ module.exports = {
                 ...command.payload
             }
         };
+    },
+    reject: (command, state) => {
+        return {
+            type: EVENT_REJECTED,
+            payload: command.payload
+        }
     }
 };

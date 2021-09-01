@@ -17,10 +17,10 @@ module.exports = {
             };
         },
         [NEW_CAR]: async (store, { payload: { keyIdentify, model, brand, year } }, sideEffects) => {
-            if (await store.findOne(tableName, { id: keyIdentify }))
+            if (await store.findOne(tableName, { id: keyIdentify }, { position: 0 }))
                 return await sideEffects.executeCommand({
                     aggregateName: 'car',
-                    aggregateId,
+                    id,
                     type: 'reject',
                     payload: {
                         reason: 'Model already exists'
@@ -28,7 +28,7 @@ module.exports = {
                 });
             await store.insert(tableName, { id: keyIdentify });
             await sideEffects.sendRegistrationCar({
-                model, brand, year
+                model, brand, year, keyIdentify
             });
         }
     },

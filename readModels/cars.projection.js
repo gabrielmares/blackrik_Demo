@@ -1,4 +1,4 @@
-const { NEW_CAR, UPDATE_CAR } = require('../events/cars')
+const { NEW_CAR, UPDATE_CAR, EVENT_REJECTED } = require('../events/cars')
 const tableName = 'Cars'
 
 
@@ -24,12 +24,15 @@ module.exports = {
             id: event.payload.keyIdentify
         })
     },
-    [UPDATE_CAR]: async (command, store) => {
+    [UPDATE_CAR]: async (store, { keyIdentify }) => {
         return await store.update(tableName, {
-            id: command.id
+            keyIdentify
         }, {
             ...command.payload,
             updatedAt: Date.now()
         })
+    },
+    [EVENT_REJECTED]: async (store, { keyIdentify }) => {
+        return await store.delete(tableName, { keyIdentify })
     }
 }
