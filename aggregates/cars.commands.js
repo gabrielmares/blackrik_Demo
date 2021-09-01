@@ -10,11 +10,9 @@ const {
     ForbiddenError
 } = require('../errors');
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 module.exports = {
-    register: async (command, state/* , context */) => {
+    register: async (command, state) => {
         if (state.registered)
             throw new ConflictError('Car already registered');
         if (!command.payload.model)
@@ -24,10 +22,12 @@ module.exports = {
         if (!command.payload.brand)
             throw new BadRequestError('Please provide a brand');
 
+        const keyIdentify = Date.now();
         return {
             type: NEW_CAR,
             payload: {
-                ...command.payload
+                ...command.payload,
+                keyIdentify
             }
         };
     },

@@ -10,18 +10,21 @@ module.exports = {
                 primaryKey: true,
             },
             model: 'string',
-            year: 'number',
+            year: 'string',
             brand: 'string',
             createdAt: 'date',
             updatedAt: 'date'
         });
     },
-    [NEW_CAR]: (command, store) => {
+    [NEW_CAR]: async (store, event) => {
         return await store.insert(tableName, {
-            ...command.payload
+            model: event.payload.model,
+            year: event.payload.year,
+            brand: event.payload.brand,
+            id: event.payload.keyIdentify
         })
     },
-    [UPDATE_CAR]: (command, store) => {
+    [UPDATE_CAR]: async (command, store) => {
         return await store.update(tableName, {
             id: command.id
         }, {
