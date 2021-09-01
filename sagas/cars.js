@@ -11,14 +11,13 @@ module.exports = {
                     type: 'uuid',
                     primaryKey: true,
                 },
-                keyIdentify: 'string'
             });
             return {
                 noopSideEffectsOnReplay: true
             };
         },
         [NEW_CAR]: async (store, { payload: { keyIdentify, model, brand, year } }, sideEffects) => {
-            if (await store.findOne(tableName, { keyIdentify }))
+            if (await store.findOne(tableName, { id: keyIdentify }))
                 return await sideEffects.executeCommand({
                     aggregateName: 'car',
                     aggregateId,
@@ -27,9 +26,9 @@ module.exports = {
                         reason: 'Model already exists'
                     }
                 });
-            await store.insert(tableName, { id, keyIdentify });
-            await sideEffects.sendRegistrationMail({
-                keyIdentify, model, brand, year
+            await store.insert(tableName, { id: keyIdentify });
+            await sideEffects.sendRegistrationCar({
+                model, brand, year
             });
         }
     },
