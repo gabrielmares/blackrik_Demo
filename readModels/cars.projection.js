@@ -9,7 +9,6 @@ module.exports = {
                 type: 'uuid',
                 primaryKey: true,
             },
-            keyIdentify: 'string',
             model: 'string',
             year: 'string',
             brand: 'string',
@@ -17,12 +16,12 @@ module.exports = {
             updatedAt: 'date'
         });
     },
-    [NEW_CAR]: async (command, store) => {
+    [NEW_CAR]: async (store, event) => {
         return await store.insert(tableName, {
-            model: command.payload.model,
-            year: command.payload.year,
-            brand: command.payload.brand,
-            keyIdentify: command.payload.keyIdentify
+            model: event.payload.model,
+            year: event.payload.year,
+            brand: event.payload.brand,
+            id: event.payload.keyIdentify
         })
     },
     [UPDATE_CAR]: async (command, store) => {
