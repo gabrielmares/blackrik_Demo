@@ -25,7 +25,7 @@ Endpoint : http://localhost:3000/commands
     }
 }
 
-### aggregateName: Model when you try to put your payload
+### aggregateName: Model where you try to put your payload
 ### type: is the action what you want to do
 ### payload: Object to register en BD
 
